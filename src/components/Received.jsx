@@ -1,59 +1,69 @@
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { ChatContext } from "../context/ChatContext";
+// import { ChatContext } from "../context/ChatContext";
 import { db } from "../firebase";
 
 
 const Received = () => {
-  const [qudos, setQudos] = useState([]);
   const { currentUser } = useContext(AuthContext);
 
-  const { data } = useContext(ChatContext);
+
+  // const { data } = useContext(ChatContext);
 
 
-  // Dit stuk code moet herschreven worden. Op dit moment wordt er dubbel gekeken naar de database.
-  // Daarbij wil ik bij Received alleen gekregen qudos zien, ongeacht wie ze heeft verstuurd.
+  const [qudos, setQudos] = useState([]);
 
+  const loadQudos = async () => {
+    //getDoc from collection userQudos > currentUser.uid > received > index
+    const qudosDb = await getDoc(doc(db, "userQudos", currentUser.uid));
+    const qudosData = qudosDb.data();
+    const qudosReceived = qudosData.received;
+    setQudos(qudosReceived);
+    // setQudos(qudos);
+  };
 
-  useEffect(() => {
-    const getQudoSenders = () => {
-      const unsub = onSnapshot(doc(db, "userQudos", currentUser.uid), (doc) => {
-        setQudos(doc.data());
-      });
-      return () => {
-        unsub();
-      }
-    };
-    currentUser.uid && getQudoSenders()
-    const getQudos = () => {
-      const unsub = onSnapshot(doc(db, "qudos", data.qudoId), (doc) => {
-        doc.exists() && setQudos(doc.data().messages);
-      });
-      return () => {
-        unsub();
-      }
-    };
-    data.qudoId && getQudos()
-  }, [currentUser.uid, data.qudoId]);
-
+  useEffect(() => { loadQudos() }, []);
 
   return (
     <div>
-      {Object.entries(qudos)?.sort((a, b) => b[1].date - a[1].date).map((qudo) => (
-        <div
-          key={qudo[0]}
-        >
-          <span>{qudo[1].userInfo.displayName}</span>
-          <p>{qudo[1].lastMessage?.text}</p>
-          <br></br>
+      <h1>Received</h1>
+      {qudos.map((qudo) => (
+        <div key={qudo.qudoId}>
+          <p>{qudo.senderInfo.senderName}</p>
+          <img src={qudo.senderInfo.senderImg} alt="" />
+          <p>{qudo.text}</p>
+          <hr /><br />
         </div>
-
       ))}
-
     </div>
+  );
+};
 
-  )
-}
+export default Received;
 
-export default Received
+  // useEffect(() => {
+  //   loadQudos();
+  // }, []);
+
+
+  
+
+//   return (
+//     <div>
+//       <h1>Received</h1>
+//       {Object.keys(qudos).map((qudo) => (
+//         <div key={qudo}>
+//           <p>{qudos[qudo].qudoSender}</p>
+//           <p>{qudos[qudo].text}</p>
+
+//         </div>
+//       ))}
+
+
+//     </div>
+
+//   )
+// }
+
+// export default Received

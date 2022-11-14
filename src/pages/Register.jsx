@@ -47,7 +47,7 @@ const Register = () => {
                         });
 
                         // Create empty user Qudo's on firestore
-                        await setDoc(doc(db, "userQudos", res.user.uid), {});
+                        await setDoc(doc(db, "userQudos", res.user.uid), { sent: [], received: [] });
                         navigate("/");
 
 

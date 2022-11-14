@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     collection,
     getDocs,
@@ -6,7 +6,7 @@ import {
 import { db } from "../firebase";
 import Navbar from '../components/Navbar'
 import { Link, useNavigate } from 'react-router-dom'
-import { ChatContext } from "../context/ChatContext";
+// import { ChatContext } from "../context/ChatContext";
 
 
 
@@ -16,7 +16,7 @@ const SelecteerOntvanger = () => {
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [err, setErr] = useState(false);
     const [, setSelectedUser] = useState(null);
-    const { dispatch, resetChat } = useContext(ChatContext);
+    // const { dispatch, resetChat } = useContext(ChatContext);
     // Vraag de gebruikers op uit de database
     async function getData() {
         const dataFetch = await getDocs(collection(db, "users"));
@@ -43,11 +43,11 @@ const SelecteerOntvanger = () => {
     };
 
     const handleSelect = (user) => {
-        dispatch({
-            type: "CHANGE_USER",
-            payload: user,
+        // dispatch({
+        //     type: "CHANGE_USER",
+        //     payload: user,
 
-        });
+        // });
         setSelectedUser(user);
         navigate('/stuurqudo', { state: { state: user } });
     };
@@ -56,7 +56,7 @@ const SelecteerOntvanger = () => {
     return (
         <div className="container">
             <Navbar />
-            <Link to='/' onClick={() => resetChat() }>Terug</Link>
+            <Link to='/' onClick={() => setSelectedUser(null)}>Terug</Link>
             <h1>Wie wil je een Qudo sturen?</h1>
             <div className="search">
                 <div className="searchForm">
@@ -75,7 +75,7 @@ const SelecteerOntvanger = () => {
                             <img src={user.data().photoURL} alt="" />
                             <span>{user.data().displayName} &nbsp;</span>
 
-                            <button onClick={() => handleSelect(user.data())}>Stuur Qudo</button>
+                            <button onClick={() => handleSelect(user.data())}>Select</button>
                         </div>
                     ))}
                 </div>
