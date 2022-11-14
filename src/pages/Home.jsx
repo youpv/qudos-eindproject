@@ -1,13 +1,26 @@
 import React from 'react'
-import Sidebar from '../components/Sidebar'
+import DailyChallenge from '../components/DailyChallenge'
+import MoodMeter from '../components/MoodMeter'
+import Navbar from '../components/Navbar'
+import QudoDB from '../components/QudoDB'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
-  return (
-    <div className="home">
-        <div className="container">
-            <Sidebar />
+  const navigate = useNavigate()
 
-        </div>
+  const newQudo = () => {
+    navigate('/selecteerontvanger')
+  }
+
+  return (
+    <div className="container">
+      <Navbar />
+      <div className='home'>
+        <MoodMeter />
+        <DailyChallenge />
+        <QudoDB />
+      </div>
+      <button className='bottomButton' onClick={newQudo}>Maak een Qudo</button>
     </div>
   )
 }
