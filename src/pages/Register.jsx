@@ -82,7 +82,7 @@ const Register = () => {
                     </label>
                     <br></br>
                     <button disabled={loading}>Registreer</button>
-                    {loading && <span>Profielfoto aan het uploadden...</span>}
+                    {loading && <span>Profielfoto aan het uploaden...</span>}
                     {err && <span>Er is iets misgegaan</span>}
                 </form>
                 <p>

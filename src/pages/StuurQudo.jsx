@@ -15,6 +15,8 @@ const StuurQudo = () => {
   const { state } = location.state ? location.state : { state: null };
   const { currentUser } = useContext(AuthContext);
   const [text, setText] = useState("");
+  const [error, setError] = useState(false);
+  const [sent, setSent] = useState(false);
 
 
 
@@ -77,7 +79,11 @@ const StuurQudo = () => {
           date: Timestamp.now(),
         });
 
-
+        setSent(true);
+        // After 3 seconds, redirect to home
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1000);
         setText("");
 
         //WERKENDE CODE, OUD
@@ -115,8 +121,9 @@ const StuurQudo = () => {
 
 
 
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err);
+        setError(err);
       }
     }
 
@@ -127,6 +134,8 @@ const StuurQudo = () => {
       <div className="container">
         <Navbar />
         <Link to='/selecteerontvanger'>Terug</Link>
+        {error && <span>Er is iets foutgegaan, probeer het opnieuw.</span>}
+        {sent && <span>Qudo verstuurd!</span>}
         <h1>Wie wil je een Qudo sturen?</h1>
         <div>
           <span>Ik stuur een qudo naar {state.displayName}, omdat...</span>

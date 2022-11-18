@@ -19,11 +19,18 @@ const Sent = () => {
     const qudosDb = await getDoc(doc(db, "userQudos", currentUser.uid));
     const qudosData = qudosDb.data();
     const qudosSent = qudosData.sent;
-    setQudos(qudosSent);
+    let qudosArray = Object.values(qudosSent);
+    qudosArray = qudosArray.reverse();
+    setQudos(qudosArray);
     // setQudos(qudos);
   };
 
-  useEffect(() => { loadQudos() }, []);
+  useEffect(() => {
+    loadQudos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
 
   return (
     <div>
@@ -41,29 +48,3 @@ const Sent = () => {
 };
 
 export default Sent;
-
-  // useEffect(() => {
-  //   loadQudos();
-  // }, []);
-
-
-  
-
-//   return (
-//     <div>
-//       <h1>Received</h1>
-//       {Object.keys(qudos).map((qudo) => (
-//         <div key={qudo}>
-//           <p>{qudos[qudo].qudoSender}</p>
-//           <p>{qudos[qudo].text}</p>
-
-//         </div>
-//       ))}
-
-
-//     </div>
-
-//   )
-// }
-
-// export default Received

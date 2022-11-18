@@ -14,17 +14,31 @@ const Received = () => {
 
   const [qudos, setQudos] = useState([]);
 
-  const loadQudos = async () => {
-    //getDoc from collection userQudos > currentUser.uid > received > index
-    const qudosDb = await getDoc(doc(db, "userQudos", currentUser.uid));
-    const qudosData = qudosDb.data();
-    const qudosReceived = qudosData.received;
-    setQudos(qudosReceived);
-    // setQudos(qudos);
-  };
 
-  useEffect(() => { loadQudos() }, []);
 
+
+    const loadQudos = async () => {
+      
+      //getDoc from collection userQudos > currentUser.uid > received > index
+      const qudosDb = await getDoc(doc(db, "userQudos", currentUser.uid));
+      const qudosData = qudosDb.data();
+      const qudosReceived = qudosData.received;
+      let qudosArray = Object.values(qudosReceived);
+      qudosArray = qudosArray.reverse();
+      setQudos(qudosArray);
+      // setQudos(qudos);
+    };
+    
+
+    useEffect(() => { loadQudos()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+
+
+
+
+    
   return (
     <div>
       <h1>Received</h1>
@@ -34,36 +48,11 @@ const Received = () => {
           <img src={qudo.senderInfo.senderImg} alt="" />
           <p>{qudo.text}</p>
           <hr /><br />
-        </div>
+          </div>
       ))}
+
     </div>
   );
 };
 
 export default Received;
-
-  // useEffect(() => {
-  //   loadQudos();
-  // }, []);
-
-
-  
-
-//   return (
-//     <div>
-//       <h1>Received</h1>
-//       {Object.keys(qudos).map((qudo) => (
-//         <div key={qudo}>
-//           <p>{qudos[qudo].qudoSender}</p>
-//           <p>{qudos[qudo].text}</p>
-
-//         </div>
-//       ))}
-
-
-//     </div>
-
-//   )
-// }
-
-// export default Received
