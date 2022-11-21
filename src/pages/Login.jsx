@@ -19,14 +19,14 @@ const Login = () => {
     }
 
     return (
-        <div className="formContainer">
-            <div className="formWrapper">
+        <div className="container">
+            <div className="row">
                 <h1 className="logo">Qudo's</h1>
                 <h2 className="title">Inloggen</h2>
                 <form onSubmit={handleSubmit}>
                     <input type="email" name="email" placeholder="Email" autoComplete='email' />
                     <input type="password" name="password" placeholder="Wachtwoord" autoComplete='current-password' />
-                    <button>Inloggen</button>
+                    <button className="btn">Inloggen</button>
                     {err && <span>Er is iets misgegaan</span>}
                 </form>
                 <p>
