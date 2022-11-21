@@ -36,12 +36,16 @@ const Register = () => {
                         // Update user profile
                         await updateProfile(res.user, {
                             displayName: firstName.value + " " + lastName.value,
+                            firstName: firstName.value,
+                            lastName: lastName.value,
                             photoURL: downloadURL,
                         });
                         // Add user to firestore
                         await setDoc(doc(db, "users", res.user.uid), {
                             uid: res.user.uid,
                             displayName: firstName.value + " " + lastName.value,
+                            firstName: firstName.value,
+                            lastName: lastName.value,
                             email: email.value,
                             photoURL: downloadURL,
                         });
