@@ -46,7 +46,7 @@ const Received = () => {
         const qudosReceived = qudosDb.received;
         // for each item in qudosReceived, push to top of array
         let qudosArray = [];
-        for (const [key, value] of Object.entries(qudosReceived)) {
+        for (const value of Object.values(qudosReceived)) {
           qudosArray.unshift(value);
         }
         setQudos(qudosArray);

@@ -39,7 +39,7 @@ const Sent = () => {
         const qudosSent = qudosDb.sent;
         // for each item in qudosReceived, push to top of array
         let qudosArray = [];
-        for (const [key, value] of Object.entries(qudosSent)) {
+        for (const value of Object.values(qudosSent)) {
           qudosArray.unshift(value);
         }
         setQudos(qudosArray);
