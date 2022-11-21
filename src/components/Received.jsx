@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 // import { ChatContext } from "../context/ChatContext";
 import { db } from "../firebase";
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 
 const Received = () => {
@@ -67,6 +69,7 @@ const Received = () => {
   return (
     <div>
       <h1>Received</h1>
+      {/* <FontAwesomeIcon icon={faEnvelope} /> */}
       {qudos.map((qudo) => (
         <div key={qudo.qudoId}>
           <p>{qudo.senderInfo.senderName}</p>
