@@ -11,11 +11,17 @@ import SelecteerOntvanger from "./pages/SelecteerOntvanger";
 function App() {
 	const { currentUser } = useContext(AuthContext);
 
+	// Let users only access the home page if they are logged in
 	const ProtectedRoute = ({ children }) => {
 		if (!currentUser) {
 			return <Navigate to="/login" />;
 		}
 		return children;
+	};
+
+	// If page is not found, redirect to home
+	const NotFound = () => {
+		return <Navigate to="/" />;
 	};
 
 	return (
@@ -49,6 +55,7 @@ function App() {
 						}
 					/>
 				</Route>
+				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>
 	);
