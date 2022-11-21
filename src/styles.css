@@ -841,7 +841,8 @@ h6 {
     text-align: center;
 }
 
-a.btn {
+a.btn,
+button.btn {
     padding: 8px 16px;
     background-color: #FF864B;
     color: #ffffff;
@@ -849,7 +850,8 @@ a.btn {
 }
 
 a.btn:hover,
-a.btn.sec-btn:hover {
+a.btn.sec-btn:hover,
+button.btn:hover {
     background-color: #448EF5;
     color: #ffffff;
 }
