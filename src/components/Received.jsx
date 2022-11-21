@@ -67,7 +67,7 @@ const Received = () => {
 
 
   return (
-    <div>
+    <div className="qudoContainer">
       <h1>Received</h1>
       {/* <FontAwesomeIcon icon={faEnvelope} /> */}
       {qudos.map((qudo) => (

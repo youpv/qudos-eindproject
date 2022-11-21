@@ -53,7 +53,7 @@ const Sent = () => {
 
 
   return (
-    <div>
+    <div className="qudoContainer">
       <h1>Sent</h1>
       {qudos.map((qudo) => (
         <div key={qudo.qudoId}>
