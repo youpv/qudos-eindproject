@@ -54,33 +54,35 @@ const SelecteerOntvanger = () => {
 
 
     return (
-        <div className="container">
+        <>
             <Navbar />
-            <Link to='/' onClick={() => setSelectedUser(null)}>Terug</Link>
-            <h1>Wie wil je een Qudo sturen?</h1>
-            <div className="search">
-                <div className="searchForm">
-                    <input
-                        type="text"
-                        placeholder="Find a user"
-                        onChange={searchUser}
+            <div className="container">
+                <Link to='/' onClick={() => setSelectedUser(null)}>Terug</Link>
+                <h1>Wie wil je een Qudo sturen?</h1>
+                <div className="search">
+                    <div className="searchForm">
+                        <input
+                            type="text"
+                            placeholder="Find a user"
+                            onChange={searchUser}
 
-                    />
-                </div>
-                {err && <span>User not found!</span>}
+                        />
+                    </div>
+                    {err && <span>User not found!</span>}
 
-                <div className="searchResults">
-                    {filteredUsers.map((user) => (
-                        <div className="searchResult" key={user.data().uid}>
-                            <img src={user.data().photoURL} alt="" />
-                            <span>{user.data().displayName} &nbsp;</span>
+                    <div className="searchResults">
+                        {filteredUsers.map((user) => (
+                            <div className="searchResult" key={user.data().uid}>
+                                <img src={user.data().photoURL} alt="" />
+                                <span>{user.data().displayName} &nbsp;</span>
 
-                            <button onClick={() => handleSelect(user.data())}>Select</button>
-                        </div>
-                    ))}
+                                <button onClick={() => handleSelect(user.data())}>Select</button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

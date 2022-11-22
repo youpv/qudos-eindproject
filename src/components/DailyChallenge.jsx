@@ -27,8 +27,7 @@ const DailyChallenge = () => {
       </div>
 
       {show && (
-        <div className="container daily-challenge-block">
-          <div className="row">
+        
             <div className="col-sm-12 dc-popup-holder">
               <div className="dc-popup col-sm-8 shadow-block blue-shadow">
                 <h3>Daily challenge</h3>
@@ -43,8 +42,7 @@ const DailyChallenge = () => {
 
               </div>
             </div>
-          </div>
-        </div>
+
       )}
     </>
   )

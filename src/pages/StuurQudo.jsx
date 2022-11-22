@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react'
 import Navbar from '../components/Navbar'
-// import Input from '../components/Input';
 import { Link, useLocation, Navigate } from 'react-router-dom'
 import { getDoc, setDoc, doc, updateDoc, arrayUnion, Timestamp } from "firebase/firestore";
 import { db } from "../firebase";
-// import { ChatContext } from "../context/ChatContext";
 import { AuthContext } from "../context/AuthContext";
 import { v4 as uuid } from "uuid";
+import Triangle from '../img/triangle-btn-blue.svg'
+import Triangle2 from '../img/triangle-btn-up-white.svg'
+
 
 const StuurQudo = () => {
 
@@ -17,141 +18,195 @@ const StuurQudo = () => {
   const [text, setText] = useState("");
   const [error, setError] = useState(false);
   const [sent, setSent] = useState(false);
+  const kernwaarden = ["opstaan", "trots", "lef", "geniet", "gaan", "ging,", "opgestaan", "genoten", "genoot", "opstond"]
 
 
 
-  // Redirect to home if no user is selected
+  // Redirect to home if no user is selected.
 
   if (!state) {
     console.log("no user selected");
     return <Navigate to='/' />
+  }
 
-  } else {
-    const handleSend = async (user) => {
+  const handleSplits = (e) => {
+    let words = e.target.innerText.split(/(\s|\.|,)/);
+    words.forEach((word, index) => {
+      if (kernwaarden.includes(word.toLowerCase())) {
+        words[index] = `<span class="input-kernwaarde" onClick="this.classList.remove('input-kernwaarde')">${word}</span>`;
+      }
+    });
+    e.target.innerHTML = words.join("");
+  }
 
-      // const combinedId = currentUser.uid > user.uid ? currentUser.uid + user.uid : user.uid + currentUser.uid;
-      const qudoSender = currentUser;
-      const qudoReceiver = user;
-      const qudoId = uuid();
-
-
-      try {
-        const qudosDb = await getDoc(doc(db, "qudos", qudoId));
-
-        if (!qudosDb.exists()) {
-          await setDoc(doc(db, "qudos", qudoId), {
-            qudoId: qudoId,
-            qudoSender: qudoSender.uid,
-            qudoReceiver: qudoReceiver.uid,
-            date: Timestamp.now(),
-
-          });
+  const textOptions = () => {
+    const voorbeelden = ["Ik vind dat je...", "Deze sprint heb je...", "Ik wil je bedanken voor...", "Wij hebben samen...", "Een voorbeeld daarvan is..."];
+    return (
+      <>
+        {voorbeelden.map((voorbeeld) => {
+          return (
+            <button className="btn" onClick={insertVoorbeeld}>{voorbeeld}</button>
+          )
         }
-        await updateDoc(doc(db, "userQudos", qudoSender.uid), {
-          sent: arrayUnion({
-            qudoId,
-            receiverInfo: {
-              receiverId: qudoReceiver.uid,
-              receiverName: qudoReceiver.displayName,
-              receiverImg: qudoReceiver.photoURL,
-            },
-            text,
-            date: Timestamp.now(),
-          })
-        });
-        await updateDoc(doc(db, "userQudos", qudoReceiver.uid), {
-          received: arrayUnion({
-            qudoId,
-            senderInfo: {
-              senderId: qudoSender.uid,
-              senderName: qudoSender.displayName,
-              senderImg: qudoSender.photoURL,
-            },
-            text,
-            date: Timestamp.now(),
-          })
-        });
-        await updateDoc(doc(db, "qudos", qudoId), {
+        )}
+      </>
+    )
+  }
+
+  const insertVoorbeeld = (e) => {
+    // add voorbeeld to existing text
+    setText(text + " " + e.target.innerText);
+  }
+
+  const handleSend = async (user) => {
+    // Check if text is empty
+    if (text === "") {
+      setError(true);
+      return;
+    }
+
+    // const combinedId = currentUser.uid > user.uid ? currentUser.uid + user.uid : user.uid + currentUser.uid;
+    const qudoSender = currentUser;
+    const qudoReceiver = user;
+    const qudoId = uuid();
+
+
+    try {
+      const qudosDb = await getDoc(doc(db, "qudos", qudoId));
+
+      if (!qudosDb.exists()) {
+        await setDoc(doc(db, "qudos", qudoId), {
           qudoId: qudoId,
           qudoSender: qudoSender.uid,
           qudoReceiver: qudoReceiver.uid,
+          date: Timestamp.now(),
+
+        });
+      }
+      await updateDoc(doc(db, "userQudos", qudoSender.uid), {
+        sent: arrayUnion({
+          qudoId,
+          receiverInfo: {
+            receiverId: qudoReceiver.uid,
+            receiverName: qudoReceiver.displayName,
+            receiverImg: qudoReceiver.photoURL,
+          },
           text,
           date: Timestamp.now(),
-        });
+        })
+      });
+      await updateDoc(doc(db, "userQudos", qudoReceiver.uid), {
+        received: arrayUnion({
+          qudoId,
+          senderInfo: {
+            senderId: qudoSender.uid,
+            senderName: qudoSender.displayName,
+            senderImg: qudoSender.photoURL,
+          },
+          text,
+          date: Timestamp.now(),
+        })
+      });
+      await updateDoc(doc(db, "qudos", qudoId), {
+        qudoId: qudoId,
+        qudoSender: qudoSender.uid,
+        qudoReceiver: qudoReceiver.uid,
+        text,
+        date: Timestamp.now(),
+      });
 
-        setSent(true);
-        // After 3 seconds, redirect to home
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 1000);
-        setText("");
+      setSent(true);
+      // After 3 seconds, redirect to home
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
+      setText("");
 
-        //WERKENDE CODE, OUD
-
-        // Check of de gebruiker al eens een Qudo heeft gegeven.
-        // const res = await getDoc(doc(db, "qudos", combinedId));
-
-        // if (!res.exists()) {
-        //   //create a chat in chats collection
-        //   await setDoc(doc(db, "qudos", combinedId), { messages: [] });
-
-        //   //create user chats
-        //   await updateDoc(doc(db, "userQudos", currentUser.uid), {
-        //     [combinedId + ".userInfo"]: {
-        //       uid: user.uid,
-        //       displayName: user.displayName,
-        //       photoURL: user.photoURL,
-        //     },
-        //     [combinedId + ".date"]: serverTimestamp(),
-        //   });
-
-        //   await updateDoc(doc(db, "userQudos", user.uid), {
-        //     [combinedId + ".userInfo"]: {
-        //       uid: currentUser.uid,
-        //       displayName: currentUser.displayName,
-        //       photoURL: currentUser.photoURL,
-        //     },
-        //     [combinedId + ".date"]: serverTimestamp(),
-        //   });
-        // }
-
-        // EIND WERKENDE CODE, OUD
-
-
-
-
-
-      } catch (err) {
-        console.log(err);
-        setError(err);
-      }
+    } catch (err) {
+      console.log(err);
+      setError(err);
     }
+  }
 
-
-    // handleSelect(state);
-
-    return (
+  return (
+    <>
+      <Navbar />
       <div className="container">
-        <Navbar />
-        <Link to='/selecteerontvanger'>Terug</Link>
-        {error && <span>Er is iets foutgegaan, probeer het opnieuw.</span>}
-        {sent && <span>Qudo verstuurd!</span>}
-        <h1>Wie wil je een Qudo sturen?</h1>
-        <div>
-          <span>Ik stuur een qudo naar {state.displayName}, omdat...</span>
-          <div className="input">
-            <input
-              type="text"
-              placeholder="Type een je compliment..."
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-            <button onClick={() => handleSend(state)}>Stuur</button>
+        <div className="back-btn-holder">
+          <div className="row">
+            <div className="col-sm-12">
+              <Link to="/selecteerontvanger" className="back-btn triangle-btn triangle-btn-blue"><img src={Triangle} alt="" /></Link>
+            </div>
           </div>
         </div>
       </div>
-    )
-  }
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-12">
+            {error && <span>Er is iets foutgegaan, probeer het opnieuw.</span>}
+            {sent && <span>Qudo verstuurd!</span>}
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-12">
+            <div className="send-to-holder">
+              <p className='send-to-text'>Ik stuur een Qudo naar {state.displayName}</p>
+              <div className="profile-picture-holder send-to-profile-picture-holder">
+                <img src={state.photoURL} alt="" className='profile-picture send-to-profile-picture' />
+                <p className="profile-current-mood send-to-profile-current-mood">🥱</p>
+              </div>
+              <h2>Omdat...</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-12">
+            <div className="qudo-input-holder">
+              <div className="qudo-input" contentEditable="true" type="text" onBlur={handleSplits}>
+                {text}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-12">
+            <div className="kernwaarde-text-holder">
+              <ul className="kernwaarde-text">
+                <li>Opstaan</li>
+                <li>Geniet</li>
+                <li>Lef</li>
+                <li>Gaan</li>
+                <li>Trots</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-12">
+            <div className="qudo-hulp-btn-holder">
+              {textOptions()}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="container send-qudo-btn-block">
+        <div className="row">
+          <div className="col-sm-12 send-qudo-btn-holder">
+            <span className='send-qudo-btn' onClick={() => handleSend(state)} >Verstuur Qudo <img src={Triangle2} alt="" /></span>
+          </div>
+        </div>
+      </div>
+    </>
+  )
 }
+
 
 export default StuurQudo

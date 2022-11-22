@@ -634,6 +634,7 @@ h6 {
 	-webkit-box-shadow: 8px 8px 0px 0px rgba(255, 134, 75, 1);
 	-moz-box-shadow: 8px 8px 0px 0px rgba(255, 134, 75, 1);
 	box-shadow: 8px 8px 0px 0px rgba(255, 134, 75, 1);
+	height: 100%;
 }
 
 .block-title .small-title {
@@ -719,6 +720,7 @@ h6 {
 	display: block;
 	transition: 0.3s;
 	transition-timing-function: ease-in-out;
+	min-height: 118px;
 }
 
 .overview-verstuurde-qudos-holder,
@@ -749,25 +751,31 @@ h6 {
 	color: #333333;
 }
 
-.kernwaarde-text span {
+.kernwaarde-text li {
 	padding-left: 8px;
 	padding-right: 8px;
+	display: inline-block;
 }
 
 .kernwaarde-text {
 	text-align: center;
 	color: #777777;
+	list-style: none;
 }
 
 .highlight {
 	color: #ff864b;
 }
 
+.qudos-block .row {
+	min-height: 118px;
+}
+
 .daily-challenge {
 	height: 118px;
 }
 
-.daily-challenge h3 {
+.block-title {
 	position: absolute;
 	bottom: 16px;
 }
@@ -786,7 +794,7 @@ h6 {
 }
 
 .mood-meter-btns [type="radio"] + label {
-    vertical-align: middle;
+	vertical-align: middle;
 	/* cursor: pointer; */
 }
 
@@ -830,7 +838,7 @@ button.btn {
 	background-color: #ff864b;
 	color: #ffffff;
 	font-weight: 400;
-    margin-inline: 8px;
+	margin-inline: 8px;
 }
 
 button.btn:hover,
@@ -845,4 +853,34 @@ button.btn.sec-btn {
 
 .qudo-hulp-btn-holder {
 	text-align: center;
+}
+
+.qudo-hulp-btn-holder .btn {
+	margin-bottom: 8px;
+}
+
+.qudoContainer h1::first-letter {
+	text-transform: uppercase;
+}
+
+.view-more {
+	float: right;
+	margin-top: 8px;
+}
+
+.input-kernwaarde {
+	color: rgba(255, 134, 75, 1);
+	font-weight: bold;
+}
+
+.input-kernwaarde::after {
+	/* Little x right on top of the word. */
+	/* Locate it higher. */
+	content: "x";
+	font-size: 12px;
+	color: red;
+	margin-left: 0px;
+	vertical-align: top;
+	text-decoration: none;
+
 }

@@ -1,6 +1,7 @@
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Qudos from "./pages/Qudos";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -56,6 +57,7 @@ function App() {
 						}
 					/>
 				</Route>
+				<Route path="/qudos" element={<Qudos />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>
