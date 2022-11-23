@@ -1,10 +1,15 @@
 import React, { useContext } from 'react'
-// import { signOut } from "firebase/auth"
-// import { auth } from '../firebase'
 import { AuthContext } from '../context/AuthContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import {signOut} from "firebase/auth"
+import { auth } from '../firebase'
+
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext)
+
+
 
   return (
     <>
@@ -15,12 +20,17 @@ const Navbar = () => {
               <div className="profile-picture-holder">
                 <div id="progress-bar"></div>
                 <img className="profile-picture" src={currentUser.photoURL} alt='profilePic' />
-                <p className="profile-current-mood"></p>
+                <p className="profile-current-mood">🥱</p>
               </div>
               <div className="profile-info">
                 <p className="profile-name">{currentUser.displayName}</p>
                 <p className="profile-rank">Nog niet toegevoegd</p>
               </div>
+            </div>
+            <div className="col-sm-4 menu-holder">
+              <span className="menu-button" onClick={()=>signOut(auth)}>
+                <FontAwesomeIcon icon={faRightFromBracket} />
+              </span>
             </div>
           </div>
         </div>
