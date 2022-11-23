@@ -50,26 +50,48 @@ const Qudos = () => {
                     <div className="back-btn-holder">
                         <Link to="/" className="back-btn triangle-btn triangle-btn-blue"><img src={Triangle} alt="" /></Link>
                     </div>
-                    <div className="qudoContainer">
-                        <h1>{state}</h1>
-                        {state === "received" && qudos.map((qudo) => (
-                            <div key={qudo.qudoId}>
-                                <p>{qudo.senderInfo.senderName}</p>
-                                <img src={qudo.senderInfo.senderImg} alt="" />
-                                <p>{qudo.text}</p>
-                                <hr /><br />
+                </div>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <div className="send-to-holder">
+                                <h2>{state}</h2>
                             </div>
-                        )
-                        )}
-                        {state === "sent" && qudos.map((qudo) => (
-                            <div key={qudo.qudoId}>
-                                <p>{qudo.receiverInfo.receiverName}</p>
-                                <img src={qudo.receiverInfo.receiverImg} alt="" />
-                                <p>{qudo.text}</p>
-                                <hr /><br />
+                        </div>
+                    </div>
+                </div>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <div className="qudoContainer">
+                                {state === "received" && qudos.map((qudo) => (
+                                    <div className='ontvangen-qudo shadow-block' key={qudo.qudoId}>
+                                        <div className="profile-picture-holder">
+                                            <img className="profile-picture" src={qudo.senderInfo.senderImg} alt="" />
+                                            <p className="profile-current-mood">😊</p>
+                                        </div>
+                                        <div className="profile-info">
+                                            <p className="profile-name">{qudo.senderInfo.senderName}</p>
+                                            <p className='qudo-excerpt'>{qudo.text}</p>
+                                        </div>
+                                    </div>
+                                )
+                                )}
+                                {state === "sent" && qudos.map((qudo) => (
+                                    <div className='ontvangen-qudo shadow-block' key={qudo.qudoId}>
+                                    <div className="profile-picture-holder">
+                                        <img className="profile-picture" src={qudo.receiverInfo.receiverImg} alt="" />
+                                        <p className="profile-current-mood">😊</p>
+                                    </div>
+                                    <div className="profile-info">
+                                        <p className="profile-name">{qudo.receiverInfo.receiverName}</p>
+                                        <p className='qudo-excerpt'>{qudo.text}</p>
+                                    </div>
+                                </div>
+                                )
+                                )}
                             </div>
-                        )
-                        )}
+                        </div>
                     </div>
                 </div>
                 <MaakQudo />
