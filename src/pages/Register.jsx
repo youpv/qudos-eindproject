@@ -5,6 +5,7 @@ import { auth, db, storage } from '../firebase'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { doc, setDoc } from 'firebase/firestore'
 import { useNavigate, Link } from 'react-router-dom'
+import Logo from '../img/QudosLogo.png'
 
 const Register = () => {
     const [err, setErr] = useState(false)
@@ -70,31 +71,43 @@ const Register = () => {
     }
 
     return (
-        <div className="formContainer">
-            <div className="formWrapper">
-                <h1 className="logo">Qudo's</h1>
-                <h2 className="title">Registreren</h2>
-                <form onSubmit={handleSubmit}>
-                    <input required type="text" name="firstName" placeholder="Voornaam" />
-                    <input required type="text" name="lastName" placeholder="Achternaam" />
-                    <input required type="email" name="email" placeholder="Email" autoComplete='email' />
-                    <input required type="password" name="password" placeholder="Wachtwoord" autoComplete='new-password' />
-                    <input required style={{ display: "none" }} type="file" id="file" onChange={handleChange} />
-                    <label htmlFor="file">
-                        <img src={Add} id="imageHolder" alt="" />
-                        <span>Upload een profielfoto</span>
-                    </label>
-                    <br></br>
-                    <button disabled={loading}>Registreer</button>
-                    {loading && <span>Profielfoto aan het uploaden...</span>}
-                    {err && <span>Er is iets misgegaan</span>}
-                </form>
-                <p>
-                    Heb je al een account? <Link to="/login">Log in</Link>
-                </p>
-
+        <div className="container login-page">
+            <div className="row">
+                <div className="col-12 col-md-6">
+                    <div className="logo">
+                        <img src={Logo} alt="Qudos Logo" />
+                    </div>
+                </div>
             </div>
-        </div>
+            <div className="row">
+                <div className="col-12 col-md-6">
+                    <div className="login-form">
+                        <h1 className="login-title">Registreren</h1>
+                        <form onSubmit={handleSubmit}>
+                            <div className="form-group"><input className='form-control' required type="text" name="firstName" placeholder="Voornaam" /></div>
+                            <div className="form-group"><input className='form-control' required type="text" name="lastName" placeholder="Achternaam" /></div>
+                            <div className="form-group"><input className='form-control' required type="email" name="email" placeholder="Email" autoComplete='email' /></div>
+                            <div className="form-group"><input className='form-control' required type="password" name="password" placeholder="Wachtwoord" autoComplete='new-password' /></div>
+                            <div className="form-group">
+                                <input className='form-control' required style={{ display: "none" }} type="file" id="file" onChange={handleChange} />
+                                <label className='form-control' htmlFor="file">
+                                    <img className='preview-img' src={Add} id="imageHolder" alt="" />
+                                    <span>Upload een profielfoto</span>
+                                </label>
+                            </div>
+                            <button type='submit' className='btn btn-primary' disabled={loading}>Registreer</button>
+                            {loading && <span>Profielfoto aan het uploaden...</span>}
+                            {err && <span>Er is iets misgegaan</span>}
+                        </form>
+                        <p className='text-center'>
+                            Heb je al een account? <Link to="/login">Log in</Link>
+                        </p>
+
+                    </div>
+                </div >
+            </div >
+        </div >
+
     )
 }
 

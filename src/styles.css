@@ -435,12 +435,10 @@ template {
 
 .qudoContainer img,
 .searchResult img {
-	width: 30px;
-	height: 30px;
 	object-fit: cover;
 	aspect-ratio: 1/1;
 	border-radius: 50%;
-	margin-inline-end: 10px;
+	/* margin-inline-end: 10px; */
 }
 
 /*** Start CSS front-end poc ***/
@@ -485,8 +483,8 @@ h6 {
 	height: 60px;
 	border-radius: 50%;
 	position: absolute;
-	top: -3px;
-	left: -5px;
+	top: -2.7px;
+	left: -2.75px;
 	background: radial-gradient(white 50%, transparent 51%),
 		conic-gradient(transparent 0deg 220deg, gainsboro 220deg 360deg),
 		#448ef5;
@@ -497,8 +495,9 @@ h6 {
 .profile-picture {
 	position: absolute;
 	object-fit: cover;
-	width: 100%;
+	/* width: 100%; */
 	height: 100%;
+	aspect-ratio: 1/1;
 	border-radius: 50px;
 }
 
@@ -884,6 +883,10 @@ button.btn.sec-btn {
 	max-height: 75vh;
 }
 
+.search::-webkit-scrollbar {
+	display: none;
+}
+
 .searchForm input {
 	width: 100%;
 	padding: 8px 16px;
@@ -912,6 +915,11 @@ button.btn.sec-btn {
 	border-radius: 5px;
 	background-color: #fff;
 	height: 50%;
+	overflow-y: scroll;
+}
+
+.searchResults::-webkit-scrollbar {
+	display: none;
 }
 
 .searchResult {
@@ -945,4 +953,90 @@ button.btn.sec-btn {
 }
 .searchResult button {
 	margin-left: auto;
+}
+
+.col-sm-12 .qudoContainer {
+	max-height: 60vh;
+	overflow-y: scroll;
+	padding: 0px 8px 16px 8px;
+}
+
+.qudoContainer::-webkit-scrollbar {
+	display: none;
+}
+
+.send-to-holder > h2::first-letter {
+	text-transform: uppercase;
+}
+
+.login-page {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 75vh;
+}
+
+.login-page .logo {
+	width: 200px;
+	height: 200px;
+	aspect-ratio: 1/1;
+	margin-left: -56px;
+}
+
+.login-form {
+	width: 75vw;
+	max-width: 400px;
+	padding: 15px;
+	margin: 0 auto;
+}
+
+.login-form h1 {
+	text-align: center;
+	padding-bottom: 16px;
+}
+
+.login-form .form-group {
+	margin-bottom: 1rem;
+}
+
+.login-form .form-control {
+	position: relative;
+	box-sizing: border-box;
+	height: auto;
+	padding: 10px;
+	font-size: 16px;
+}
+
+.login-form .form-control:focus {
+	z-index: 2;
+}
+
+.login-form button[type="submit"] {
+	font-weight: 400;
+	color: #fff;
+	background-color: #ff864b;
+	border-color: #ff864b;
+	width: 100%;
+	margin-inline: 0;
+}
+
+.login-form button[type="submit"]:hover {
+	color: #fff;
+	background-color: #448ef5;
+	border-color: #448ef5;
+}
+
+.login-form .text-center {
+	text-align: center;
+	margin-top: 16px;
+}
+
+.preview-img {
+	width: 60px;
+	height: 60px;
+	border-radius: 5px;
+	margin-right: 8px;
+	object-fit: cover;
+
 }
