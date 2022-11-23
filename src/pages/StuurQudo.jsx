@@ -7,18 +7,27 @@ import { AuthContext } from "../context/AuthContext";
 import { v4 as uuid } from "uuid";
 import Triangle from '../img/triangle-btn-blue.svg'
 import Triangle2 from '../img/triangle-btn-up-white.svg'
+import { maxlengthContentEditable } from 'maxlength-contenteditable';
 
 
 const StuurQudo = () => {
-
-  // const { data } = useContext(ChatContext);
   const location = useLocation();
   const { state } = location.state ? location.state : { state: null };
   const { currentUser } = useContext(AuthContext);
   const [text, setText] = useState("");
   const [error, setError] = useState(false);
   const [sent, setSent] = useState(false);
-  const kernwaarden = ["opstaan", "trots", "lef", "geniet", "gaan", "ging,", "opgestaan", "genoten", "genoot", "opstond"]
+  // const kernwaarden = ["opstaan", "geniet", "lef", "gaan", "trots", "ging,", "opgestaan", "genoten", "genoot", "opstond"]
+  let foundKw = [];
+  // make an array or object for the 5 kernwaarde, but some kernwaarde have multiple words, so make an array of arrays or objects
+  const kernwaarden = [{
+    "Opstaan": ["opstaan", "opgestaan", "opstond"],
+    "Geniet": ["geniet", "genoten", "genoot"],
+    "Lef": ["lef"],
+    "Gaan": ["gaan", "ging"],
+    "Trots": ["trots"]
+  }]
+
 
 
 
@@ -30,13 +39,33 @@ const StuurQudo = () => {
   }
 
   const handleSplits = (e) => {
-    let words = e.target.innerText.split(/(\s|\.|,)/);
+    foundKw = [];
+    let words = e.target.innerText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    words = words.split(/(\s|\.|,)/);
     words.forEach((word, index) => {
-      if (kernwaarden.includes(word.toLowerCase())) {
-        words[index] = `<span class="input-kernwaarde" onClick="this.classList.remove('input-kernwaarde')">${word}</span>`;
-      }
+      kernwaarden.forEach((kw) => {
+        for (const [key, value] of Object.entries(kw)) {
+          if (value.includes(word.toLowerCase())) {
+            foundKw.push(key);
+            handleKwPreviews();
+            words[index] = `<span class="input-kernwaarde">${word}</span>`
+          }
+        }
+      })
     });
     e.target.innerHTML = words.join("");
+  }
+
+
+  const handleKwPreviews = () => {
+    const kwPreviews = document.querySelectorAll(".kernwaarde-text li")
+    kwPreviews.forEach((kwPreview) => {
+      if (foundKw.includes(kwPreview.innerText)) {
+        kwPreview.classList.add("input-kernwaarde");
+      } else if (!foundKw.includes(kwPreview.innerText)) {
+        kwPreview.classList.remove("input-kernwaarde");
+      }
+    })
   }
 
   const textOptions = () => {
@@ -166,8 +195,8 @@ const StuurQudo = () => {
         <div className="row">
           <div className="col-sm-12">
             <div className="qudo-input-holder">
-              <div className="qudo-input" contentEditable="true" type="text" onBlur={handleSplits}>
-                {text}
+              <div className="qudo-input" data-max-length="300" contentEditable="true" type="text" onFocus={() => maxlengthContentEditable()} onInput={handleKwPreviews} onBlur={handleSplits}>
+                {text} 
               </div>
             </div>
           </div>
