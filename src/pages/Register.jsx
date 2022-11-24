@@ -12,11 +12,27 @@ const Register = () => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
+    /* Function Docs
+        1. This function takes the value of the input element and creates a new image element in the DOM with the value of the input as the src
+        2. It then attaches the new image element to the DOM */
+
     const handleChange = (e) => {
         const img = e.target.files[0]
         const imageHolder = document.getElementById('imageHolder')
         imageHolder.src = URL.createObjectURL(img)
     }
+
+
+    /* Function Docs:
+        1. When the user submits the form, we take the values of the input fields and store them in variables
+        2. We then create a user with the createUserWithEmailAndPassword function from the Firebase SDK
+        3. We then create a date variable and a storageRef variable that will be used to store the files in Firebase Storage
+        4. We then upload the file to Firebase Storage
+        5. Once the upload is complete, we take the downloadURL of the file and store it in a variable
+        6. We then update the user profile with the user's first name, last name and profile picture
+        7. We then add the user to the Firestore database
+        8. We then create an empty user Qudos collection in the Firestore database
+        9. We then navigate the user to the home page */
 
     const handleSubmit = async (e) => {
         setLoading(true)
@@ -37,8 +53,6 @@ const Register = () => {
                         // Update user profile
                         await updateProfile(res.user, {
                             displayName: firstName.value + " " + lastName.value,
-                            firstName: firstName.value,
-                            lastName: lastName.value,
                             photoURL: downloadURL,
                         });
                         // Add user to firestore
@@ -49,13 +63,12 @@ const Register = () => {
                             lastName: lastName.value,
                             email: email.value,
                             photoURL: downloadURL,
+                            moodLog: [],
                         });
 
                         // Create empty user Qudo's on firestore
                         await setDoc(doc(db, "userQudos", res.user.uid), { sent: [], received: [] });
                         navigate("/");
-
-
 
                     } catch (err) {
                         console.log(err);
