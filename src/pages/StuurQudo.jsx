@@ -8,12 +8,14 @@ import { v4 as uuid } from "uuid";
 import Triangle from '../img/triangle-btn-blue.svg'
 import Triangle2 from '../img/triangle-btn-up-white.svg'
 import { maxlengthContentEditable } from 'maxlength-contenteditable';
+import { UserContext } from '../context/UserContext'
 
 
 const StuurQudo = () => {
   const location = useLocation();
   const { state } = location.state ? location.state : { state: null };
   const { currentUser } = useContext(AuthContext);
+  const { userData } = useContext(UserContext);
   const [text, setText] = useState("");
   const [error, setError] = useState(false);
   const [sent, setSent] = useState(false);
@@ -40,6 +42,7 @@ const StuurQudo = () => {
 
   const handleSplits = (e) => {
     foundKw = [];
+    console.log(text);
     let words = e.target.innerText.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     words = words.split(/(\s|\.|,)/);
     words.forEach((word, index) => {
@@ -48,16 +51,17 @@ const StuurQudo = () => {
           if (value.includes(word.toLowerCase())) {
             foundKw.push(key);
             handleKwPreviews();
-            words[index] = `<span class="input-kernwaarde">${word}</span>`
+            // words[index] = `<span class="input-kernwaarde">${word}</span>`
           }
         }
       })
     });
-    e.target.innerHTML = words.join("");
+    setText(words.join(""));
+    // e.target.innerHTML = words.join("");
   }
 
 
-  const handleKwPreviews = () => {
+  const handleKwPreviews = (e) => {
     const kwPreviews = document.querySelectorAll(".kernwaarde-text li")
     kwPreviews.forEach((kwPreview) => {
       if (foundKw.includes(kwPreview.innerText)) {
@@ -84,6 +88,7 @@ const StuurQudo = () => {
 
   const insertVoorbeeld = (e) => {
     // add voorbeeld to existing text
+    // setSendText(sendText + " " + e.target.innerText);
     setText(text + " " + e.target.innerText);
   }
 
@@ -119,6 +124,7 @@ const StuurQudo = () => {
             receiverId: qudoReceiver.uid,
             receiverName: qudoReceiver.displayName,
             receiverImg: qudoReceiver.photoURL,
+            receiverMood: state.mood,
           },
           text,
           date: Timestamp.now(),
@@ -131,6 +137,7 @@ const StuurQudo = () => {
             senderId: qudoSender.uid,
             senderName: qudoSender.displayName,
             senderImg: qudoSender.photoURL,
+            senderMood: userData.mood,
           },
           text,
           date: Timestamp.now(),
@@ -184,7 +191,7 @@ const StuurQudo = () => {
               <p className='send-to-text'>Ik stuur een Qudo naar {state.displayName}</p>
               <div className="profile-picture-holder send-to-profile-picture-holder">
                 <img src={state.photoURL} alt="" className='profile-picture send-to-profile-picture' />
-                <p className="profile-current-mood send-to-profile-current-mood">🥱</p>
+                <p className="profile-current-mood send-to-profile-current-mood">{state.mood}</p>
               </div>
               <h2>Omdat...</h2>
             </div>
@@ -195,8 +202,8 @@ const StuurQudo = () => {
         <div className="row">
           <div className="col-sm-12">
             <div className="qudo-input-holder">
-              <div className="qudo-input" data-max-length="300" contentEditable="true" type="text" onFocus={() => maxlengthContentEditable()} onInput={handleKwPreviews} onBlur={handleSplits}>
-                {text} 
+              <div className="qudo-input" data-max-length="300" contentEditable="true" type="text" onFocus={() => maxlengthContentEditable() & handleSplits()} onInput={handleKwPreviews} onBlur={handleSplits}>
+                {text}
               </div>
             </div>
           </div>
