@@ -1,6 +1,38 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
+import { updateDoc, doc } from 'firebase/firestore';
+import { db } from '../firebase';
+import { AuthContext } from "../context/AuthContext";
+// import UserData from '../context/UserData'
+import { UserContext } from '../context/UserContext'
+
+
 
 const MoodMeter = () => {
+  const { currentUser } = useContext(AuthContext);
+  // get userdata from context, but await for it to be loaded
+  const { userData } = useContext(UserContext);
+  const [mood, setMood] = useState(userData.mood);
+
+  // when user clicks on the mood input, use setMood to set it to the value of the mood
+  const handleMood = (e) => {
+    if (!e.target.classList.contains("active")) {
+      setMood(e.target.value);
+      updateDoc(doc(db, "users", currentUser.uid), {
+        mood: e.target.innerText
+      })
+    } else {
+      console.log("already active");
+    }
+  }
+
+  const listMoods = () => {
+    const moodList = ["😄", "😡", "😢", "😵", "😴"];
+    // return each mood as a div with the mood as text and the handleMood function as an onClick. Give the active class to the mood that is currently set in the setMood state.
+    return moodList.map((moodI, index) => {
+      return <div key={index} className={`moodBtn ${mood === moodI ? "active" : ""}`} onClick={handleMood}>{moodI}</div>
+    })
+  }
+
   return (
     <div className="container mood-meter-block">
       <div className="row">
@@ -10,16 +42,7 @@ const MoodMeter = () => {
             <p>Hoe voel je je vandaag?</p>
 
             <div className="mood-meter-btns">
-              <input type="radio" name="mood" id="moodBlij" value="&#128516;" />
-              <label className="mood" htmlFor="moodBlij">&#128516;</label>
-              <input type="radio" name="mood" id="moodBoos" value="&#128545;" />
-              <label className="mood" htmlFor="moodBoos">&#128545;</label>
-              <input type="radio" name="mood" id="moodVerdrietig" value="&#128546;" />
-              <label className="mood" htmlFor="moodVerdrietig">&#128546;</label>
-              <input type="radio" name="mood" id="moodVerward" value="&#128565;" />
-              <label className="mood" htmlFor="moodVerward">&#128565;</label>
-              <input type="radio" name="mood" id="moodMoe" value="&#128564;" />
-              <label className="mood" htmlFor="moodMoe">&#128564;</label>
+              {listMoods()}
             </div>
           </div>
         </div>

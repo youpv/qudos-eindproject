@@ -83,8 +83,8 @@ const viewMoreQudos = (state) => {
             <span className="triangle-btn triangle-btn-orange"><img src={Triangle} alt="" /></span>
           </div>
         </div>
-        {showSent && <div className='overview-verstuurde-qudos'><Sent minified="true" data={qudosSent} /><button onClick={() => viewMoreQudos("sent")} className="btn view-more">Bekijk alle verstuurde Qudo's</button></div>}
-        {showReceived && <div className='overview-ontvangen-qudos'><Received minified="true" data={qudosReceived} /><button onClick={() => viewMoreQudos("received")} className="btn view-more">Bekijk alle ontvangen Qudo's</button></div>}
+        {showSent && <div className='overview-verstuurde-qudos'><Sent data={qudosSent} /><button onClick={() => viewMoreQudos("sent")} className="btn view-more">Bekijk alle verstuurde Qudo's</button></div>}
+        {showReceived && <div className='overview-ontvangen-qudos'><Received data={qudosReceived} /><button onClick={() => viewMoreQudos("received")} className="btn view-more">Bekijk alle ontvangen Qudo's</button></div>}
       </div>
     </div>
   )
