@@ -97,7 +97,7 @@ const SelecteerOntvanger = () => {
 
                                         <div className="profile-picture-holder">
                                             <img src={user.data().photoURL} alt="" />
-                                            <p className="profile-current-mood">🥱</p>
+                                            <p className="profile-current-mood">{user.data().mood}</p>
                                         </div>
                                         <span>{user.data().displayName} &nbsp;</span>
 

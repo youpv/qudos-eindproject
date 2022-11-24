@@ -68,7 +68,7 @@ const Qudos = () => {
                                     <div className='ontvangen-qudo shadow-block' key={qudo.qudoId}>
                                         <div className="profile-picture-holder">
                                             <img className="profile-picture" src={qudo.senderInfo.senderImg} alt="" />
-                                            <p className="profile-current-mood">😊</p>
+                                            <p className="profile-current-mood">{qudo.senderInfo.senderMood}</p>
                                         </div>
                                         <div className="profile-info">
                                             <p className="profile-name">{qudo.senderInfo.senderName}</p>
@@ -81,7 +81,7 @@ const Qudos = () => {
                                     <div className='ontvangen-qudo shadow-block' key={qudo.qudoId}>
                                     <div className="profile-picture-holder">
                                         <img className="profile-picture" src={qudo.receiverInfo.receiverImg} alt="" />
-                                        <p className="profile-current-mood">😊</p>
+                                        <p className="profile-current-mood">{qudo.receiverInfo.receiverMood}</p>
                                     </div>
                                     <div className="profile-info">
                                         <p className="profile-name">{qudo.receiverInfo.receiverName}</p>
