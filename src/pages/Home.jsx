@@ -8,6 +8,8 @@ import MaakQudo from '../components/MaakQudo'
 
 const Home = () => {
   const { currentUser } = useContext(AuthContext)
+  const name = currentUser.displayName.split(' ')
+  const firstName = name[0]
 
 
   return (
@@ -17,7 +19,7 @@ const Home = () => {
         <div className="row">
           <div className="col-sm-12">
             <div className="greetings-holder">
-              <h2>Hey, <span className="greetings-name">{currentUser.displayName}</span>!</h2>
+              <h2>Hey, <span className="greetings-name">{firstName}</span>!</h2>
               <p className="greetings-text">Heb jij vandaag al een Qudo gestuurd?</p>
             </div>
           </div>
