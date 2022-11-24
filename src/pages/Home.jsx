@@ -3,15 +3,11 @@ import DailyChallenge from '../components/DailyChallenge'
 import MoodMeter from '../components/MoodMeter'
 import Navbar from '../components/Navbar'
 import QudoDB from '../components/QudoDB'
-import { AuthContext } from '../context/AuthContext'
 import MaakQudo from '../components/MaakQudo'
+import { UserContext } from '../context/UserContext'
 
 const Home = () => {
-  const { currentUser } = useContext(AuthContext)
-  const name = currentUser.displayName.split(' ')
-  const firstName = name[0]
-
-
+  const { userData } = useContext(UserContext);
   return (
     <>
       <Navbar />
@@ -19,7 +15,7 @@ const Home = () => {
         <div className="row">
           <div className="col-sm-12">
             <div className="greetings-holder">
-              <h2>Hey, <span className="greetings-name">{firstName}</span>!</h2>
+              <h2>Hey, <span className="greetings-name">{userData.firstName}</span>!</h2>
               <p className="greetings-text">Heb jij vandaag al een Qudo gestuurd?</p>
             </div>
           </div>
