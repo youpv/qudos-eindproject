@@ -483,8 +483,8 @@ h6 {
 	height: 60px;
 	border-radius: 50%;
 	position: absolute;
-	top: -2.7px;
-	left: -2.75px;
+	top: -5px;
+	left: -5px;
 	background: radial-gradient(white 50%, transparent 51%),
 		conic-gradient(transparent 0deg 220deg, gainsboro 220deg 360deg),
 		#448ef5;
@@ -789,22 +789,39 @@ h6 {
 	font-weight: 600;
 }
 
-.mood-meter-btns [type="radio"] {
+/* .mood-meter-btns [type="radio"] {
 	opacity: 0;
 }
 
 .mood-meter-btns [type="radio"] + label {
 	vertical-align: middle;
-	/* cursor: pointer; */
-}
-
-.mood-meter-btns [type="radio"]:not(:checked) + label {
 	font-size: 50px;
 }
 
-.mood-meter-btns [type="radio"]:checked + label {
-	font-size: 55px;
+.mood-meter-btns input[type="radio"]:checked~label {
+	filter: grayscale(0%);
 }
+
+
+/* select the radiobutton that's not selected and it's label */
+/* .mood-meter-btns input[type="radio"]:not(:checked)~label {
+	filter: grayscale(100%);
+} */
+
+.moodBtn {
+	display: inline-block;
+	font-size: 50px;
+	margin-inline: 8px;
+	filter: grayscale(50%);
+}
+
+.moodBtn.active {
+	filter: grayscale(0%);
+}
+
+
+
+
 
 .mood-meter-btns {
 	text-align: center;
