@@ -63,7 +63,7 @@ const Register = () => {
                             lastName: lastName.value,
                             email: email.value,
                             photoURL: downloadURL,
-                            moodLog: [],
+                            mood: "😄",
                         });
 
                         // Create empty user Qudo's on firestore
