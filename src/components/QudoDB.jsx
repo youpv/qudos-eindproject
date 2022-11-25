@@ -69,14 +69,14 @@ const viewMoreQudos = (state) => {
   return (
     <div className='container qudos-block'>
       <div className="row">
-        <div className="col-sm-6 verstuurde-qudos-holder" onClick={() => toggle('sent')}>
+        <div className={`col-sm-6 verstuurde-qudos-holder ${showSent ? "active" : ""}${showReceived ? "darken" : ""}`} onClick={() => toggle('sent')}>
           <div className="verstuurde-qudos shadow-block orange-shadow">
             <p className="qudo-number-text">{qudosSentTotal}</p>
             <h3 className="block-title"><span className="small-title">Qudo's</span> Verstuurd</h3>
             <span className="triangle-btn triangle-btn-orange"><img src={Triangle} alt="" /></span>
           </div>
         </div>
-        <div className="col-sm-6 ontvangen-qudos-holder" onClick={() => toggle('received')}>
+        <div className={`col-sm-6 ontvangen-qudos-holder ${showReceived ? "active" : ""}${showSent ? "darken" : ""}`} onClick={() => toggle('received')}>
           <div className="ontvangen-qudos shadow-block orange-shadow">
             <p className="qudo-number-text">{qudosReceivedTotal}</p>
             <h3 className="block-title"><span className="small-title">Qudo's</span> Ontvangen</h3>
