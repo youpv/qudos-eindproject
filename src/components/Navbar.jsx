@@ -25,7 +25,7 @@ const Navbar = () => {
               </div>
               <div className="profile-info">
                 <p className="profile-name">{currentUser.displayName}</p>
-                {/* <p className="profile-rank">Nog niet toegevoegd</p> */}
+                <p className="profile-rank">Qudo Rookie</p>
               </div>
             </div>
             <div className="col-sm-4 menu-holder">
