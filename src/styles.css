@@ -1057,3 +1057,51 @@ button.btn.sec-btn {
 	object-fit: cover;
 
 }
+
+.verstuurde-qudos-holder.active,
+.ontvangen-qudos-holder.active  {
+	transition: ease 0.3s;
+	width: 65%;
+}
+
+.verstuurde-qudos-holder.darken,
+.ontvangen-qudos-holder.darken {
+	transition: ease 0.3s;
+	width: 35%;
+}
+
+.verstuurde-qudos-holder,
+.ontvangen-qudos-holder {
+	transition: ease 0.3s;
+	width: 50%;
+	z-index: 3;
+}
+
+.verstuurde-qudos-holder.active span.triangle-btn,
+.ontvangen-qudos-holder.active span.triangle-btn {
+	transition: transform 0.3s ease;
+	transform: rotate(90deg);
+}
+
+.verstuurde-qudos-holder span.triangle-btn,
+.ontvangen-qudos-holder span.triangle-btn,
+.verstuurde-qudos-holder.darken span.triangle-btn,
+.ontvangen-qudos-holder.darken span.triangle-btn {
+	transition: transform 0.3s ease;
+	transform: rotate(0deg);
+}
+
+.overview-verstuurde-qudos,
+.overview-ontvangen-qudos {
+	animation: moveDown 0.3s ease;
+	z-index: 2;
+}
+
+@keyframes moveDown {
+	0% {
+		transform: translateY(-70%);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
