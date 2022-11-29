@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { AuthContextProvider } from "./context/AuthContext";
 import { UserContextProvider } from "./context/UserContext";
-// import { ChatContextProvider } from "./context/ChatContext";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,3 +15,6 @@ root.render(
 		</UserContextProvider>
 	</AuthContextProvider>
 );
+
+
+serviceWorkerRegistration.register();

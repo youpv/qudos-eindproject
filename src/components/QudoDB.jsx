@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import Sent from './Sent'
 import Received from './Received'
 import Triangle from '../img/triangle-btn-orange.svg'
+// import ColoredLogo from '../img/logo_colored.png'
 
 const QudoDB = () => {
   const [showSent, toggleShowSent] = useState(false);
@@ -41,19 +42,43 @@ const QudoDB = () => {
         setQudosSent(qudosSentArray);
         setQudosReceived(qudosReceivedArray);
 
+        // when a new qudo is received, send out a push notification, but don't trigger it when the suer loads the page.
+
+          if (qudosReceivedArray.length > qudosReceivedTotal && qudosReceivedTotal !== 0 && qudosReceivedTotal !== undefined) {
+            console.log("qra" + qudosReceivedArray.length);
+            console.log("qrt" + qudosReceivedTotal);
+            console.log('new qudo received');
+            navigator.serviceWorker.ready.then(function (registration) {
+              // call the registration's push event
+              registration.showNotification('Nieuwe Qudo ontvangen!', {
+                body: 'Je hebt een nieuwe Qudo ontvangen!',
+                icon: 'https://fhict-qudos.web.app/static/media/logo_colored.f4a96ebc208eb2d760ec.png',
+                vibrate: [200, 100, 200, 100, 200, 100, 200],
+                tag: 'vibration-sample',
+                actions: [
+                  {
+                    action: 'explore',
+                    title: 'Ga naar Qudo',
+                  },
+                  {
+                    action: 'close',
+                    title: 'Sluit',
+                  },
+                ]
+              });
+            });
+          }
       });
       return () => unsubscribe();
     } catch (error) {
       // console.log(error);
     }
 
-  }, [currentUser.uid]);
+  }, [currentUser.uid, qudosReceivedTotal]);
 
-
-
-const viewMoreQudos = (state) => {
-  navigate('/qudos', { state: { state: state } });
-}
+  const viewMoreQudos = (state) => {
+    navigate('/qudos', { state: { state: state } });
+  }
 
 
   const toggle = (state) => {

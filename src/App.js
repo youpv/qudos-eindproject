@@ -26,7 +26,7 @@ function App() {
 		return children;
 	};
 
-	alert("JE MOET IN QUDODB en RECEIVED/SENT NOG INSTELLEN DAT QUDO'S OVERFLOW UIT HEBBEN STAAN EN PASSEN OOKAL ZIJN ZE GROOT")
+	// alert("JE MOET IN QUDODB en RECEIVED/SENT NOG INSTELLEN DAT QUDO'S OVERFLOW UIT HEBBEN STAAN EN PASSEN OOKAL ZIJN ZE GROOT")
 
 	// If page is not found, redirect to home
 	const NotFound = () => {

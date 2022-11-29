@@ -19,6 +19,14 @@ const Login = () => {
         }
     }
 
+    const handleNotificationPermission = () => {
+        Notification.requestPermission().then(function (result) {
+            console.log(result)
+        })
+    }
+
+
+
     return (
         <div className="container login-page">
             <div className="row">
@@ -27,7 +35,7 @@ const Login = () => {
                         <img src={Logo} alt="Qudos Logo" />
                     </div>
                 </div>
-
+            {handleNotificationPermission()}
             </div>
             <div className="row">
                 <div className="col-sm-12">
@@ -48,26 +56,6 @@ const Login = () => {
                 </div>
             </div>
         </div>
-
-        //         <div className="col-md-6 offset-md-3">
-        //             <div className="card">
-        //                 <div className="card-body">
-        //                     <h3 className="text-center">Login</h3>
-        //                     <form onSubmit={handleSubmit}>
-        //                         <div className="mb-3">
-        //                             <input type="email" className="form-control" id="email" name="email" placeholder='Email' />
-        //                         </div>
-        //                         <div className="mb-3">
-        //                             <input type="password" className="form-control" id="password" name="password" placeholder='Wachtwoord'/>
-        //                         </div>
-        //                         <button type="submit" className="btn btn-primary">Login</button>
-        //                     </form>
-        //                     <p className="text-center mt-3">Nog geen account? <Link to="/register">Registreer</Link></p>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </div>
 
     )
 }
