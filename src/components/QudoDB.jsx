@@ -24,6 +24,12 @@ const QudoDB = () => {
 
 
   useEffect(() => {
+    /* The code above does the following:
+      1. It gets the current user's id
+      2. It gets the data from the database
+      3. It creates an array with all the received and sent qudos
+      4. It sends a push notification when a new qudo is received */
+
     try {
       const unsubscribe = onSnapshot(doc(db, "userQudos", currentUser.uid), (doc) => {
         // console.log("Current data: ", doc.data());
@@ -44,30 +50,30 @@ const QudoDB = () => {
 
         // when a new qudo is received, send out a push notification, but don't trigger it when the suer loads the page.
 
-          if (qudosReceivedArray.length > qudosReceivedTotal && qudosReceivedTotal !== 0 && qudosReceivedTotal !== undefined) {
-            console.log("qra" + qudosReceivedArray.length);
-            console.log("qrt" + qudosReceivedTotal);
-            console.log('new qudo received');
-            navigator.serviceWorker.ready.then(function (registration) {
-              // call the registration's push event
-              registration.showNotification('Nieuwe Qudo ontvangen!', {
-                body: 'Je hebt een nieuwe Qudo ontvangen!',
-                icon: 'https://fhict-qudos.web.app/static/media/logo_colored.f4a96ebc208eb2d760ec.png',
-                vibrate: [200, 100, 200, 100, 200, 100, 200],
-                tag: 'vibration-sample',
-                actions: [
-                  {
-                    action: 'explore',
-                    title: 'Ga naar Qudo',
-                  },
-                  {
-                    action: 'close',
-                    title: 'Sluit',
-                  },
-                ]
-              });
+        if (qudosReceivedArray.length > qudosReceivedTotal && qudosReceivedTotal !== 0 && qudosReceivedTotal !== undefined) {
+          console.log("qra" + qudosReceivedArray.length);
+          console.log("qrt" + qudosReceivedTotal);
+          console.log('new qudo received');
+          navigator.serviceWorker.ready.then(function (registration) {
+            // call the registration's push event
+            registration.showNotification('Nieuwe Qudo ontvangen!', {
+              body: 'Je hebt een nieuwe Qudo ontvangen!',
+              icon: 'https://fhict-qudos.web.app/static/media/logo_colored.f4a96ebc208eb2d760ec.png',
+              vibrate: [200, 100, 200, 100, 200, 100, 200],
+              tag: 'vibration-sample',
+              actions: [
+                {
+                  action: 'explore',
+                  title: 'Ga naar Qudo',
+                },
+                {
+                  action: 'close',
+                  title: 'Sluit',
+                },
+              ]
             });
-          }
+          });
+        }
       });
       return () => unsubscribe();
     } catch (error) {
